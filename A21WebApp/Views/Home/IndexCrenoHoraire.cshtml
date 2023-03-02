@@ -1,0 +1,55 @@
+﻿
+@using System.Data
+@model DataTable
+@{
+    ViewData["Title"] = "Fetching Data from WebAPI";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - consumeWebAPI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
+</head>
+<body>
+
+    <h1 class="text-center">Creno Horaire</h1>
+<table class="table">
+
+     <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Enseignante")
+            </th>
+                <th>
+                    @Html.DisplayName("Emploi du Temps")
+                </th>
+                <th>
+                    @Html.DisplayName("Jours")
+                </th>
+                <th>
+                    @Html.DisplayName("Période")
+                </th>
+               
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr>
+                    <td>@row["EnseignantID"]</td>
+                    <td>@row["EmploiTempsID"]</td>
+                    <td>@row["Jours"]</td>
+                    <td>@row["Periode"]</td>
+                   
+                   
+            </tr>
+        }
+    </tbody>
+</table>
+</body>
+</html>

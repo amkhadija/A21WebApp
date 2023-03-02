@@ -1,0 +1,28 @@
+﻿@model A21WebApp.Models.CrenoHoraire
+
+<hr />
+@*<div class="row">*@
+    @*<div class="col-md-4">*@
+            <div class="form-group">
+    <input asp-for="ID" class="form-control" name="ID_@Model.ID" type="hidden" value="@Model.ID" />
+            </div>
+    <div class="form-group">
+        <label asp-for="Periode" class="control-label"></label>
+        <input asp-for="Periode" class="form-control" name="Periode_@Model.ID" />
+        <span asp-validation-for="Periode" class="text-danger"></span>
+    </div>
+            <div class="form-group">
+                <label asp-for="EnseignantID" class="control-label"></label>
+         <input asp-for="EnseignantID" class="form-control" name="EnseignantID_@Model.ID" />
+                <span asp-validation-for="EnseignantID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+    <input asp-for="Jours" class="form-control" name="Jours_@Model.ID" type="hidden" />
+            </div>
+           
+            <div class="form-group">
+    <input asp-for="EmploiTempsID" class="form-control" name="EmploiTempsID_@Model.ID" type="hidden" />
+            </div>
+    @*</div>*@
+@*</div>*@
+

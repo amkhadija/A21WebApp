@@ -1,0 +1,48 @@
+﻿
+@using System.Data
+@model DataTable
+@{
+    ViewData["Title"] = "Fetching Data from WebAPI";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - A21WebAPI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
+</head>
+<body>
+
+    <h1 class="text-center">La liste des enseignants</h1>
+<table class="table">
+
+     <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Nom")
+            </th>
+            <th>
+                @Html.DisplayName("Prenom")
+            </th>
+            <th>
+                @Html.DisplayName("Cours")
+            </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow row in Model.Rows)
+        {
+            <tr> 
+                <td>@row["Nom"]</td>
+                <td>@row["Prenom"]</td>
+                <td>@row["Cours"]</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</body>
+</html>

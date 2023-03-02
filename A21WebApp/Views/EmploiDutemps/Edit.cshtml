@@ -1,0 +1,98 @@
+﻿@model A21WebApp.Models.EmploiTemps
+
+@{
+    ViewData["Title"] = "Edit emploi du temps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Edit emploi du temps</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Save">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input asp-for="ID" class="form-control" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Annee_Scolaire" class="control-label"></label>
+                <input asp-for="Annee_Scolaire" class="form-control" />
+                <span asp-validation-for="Annee_Scolaire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nom_Ecole" class="control-label"></label>
+                <input asp-for="Nom_Ecole" class="form-control" />
+                <span asp-validation-for="Nom_Ecole" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Groupe" class="control-label"></label>
+                <input asp-for="Groupe" class="form-control" />
+                <span asp-validation-for="Groupe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Locale" class="control-label"></label>
+                <input asp-for="Locale" class="form-control" />
+                <span asp-validation-for="Locale" class="text-danger"></span>
+            </div>
+            
+            <div>
+                <table class="table" border="1">
+                    <tbody>                       
+                        <tr>
+                            <td>Lundi</td>
+                            @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Lundi"))
+                            {
+                                <td>@await Html.PartialAsync("_EditCrenoHoraire", ch, new ViewDataDictionary(ViewData){ { "num", 1 } })</td>
+
+                            }
+                        </tr>
+                        <tr>
+                            <td>Mardi</td>
+                            @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mardi"))
+                            {
+                                <td>@await Html.PartialAsync("_EditCrenoHoraire", ch, new ViewDataDictionary(ViewData){ { "num", 2 } })</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>Mercredi</td>
+                            @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mercredi"))
+                            {
+                                <td>@await Html.PartialAsync("_EditCrenoHoraire", ch, new ViewDataDictionary(ViewData){ { "num", 3 } })</td>
+                            }
+                        </tr>
+                        <tr>
+                            <td>Jeudi</td>
+                            @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Jeudi"))
+                            {
+                                <td>@await Html.PartialAsync("_EditCrenoHoraire", ch, new ViewDataDictionary(ViewData){ { "num", 4 } })</td>
+                            }
+                        </tr>
+                        </tr>
+                        <tr>
+                            <td>Vendredi</td>
+                            @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Vendredi"))
+                            {
+                                <td>@await Html.PartialAsync("_EditCrenoHoraire", ch, new ViewDataDictionary(ViewData){ { "num", 5 } })</td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

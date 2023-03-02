@@ -1,0 +1,60 @@
+﻿
+@using System.Data
+@using A21WebApp.Models
+
+@model IEnumerable<EmploiTemps>
+@{
+    ViewData["Title"] = "Liste des emplois du temps";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - A21WebAPI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   
+</head>
+<body>
+
+    <h1 class="text-center">Liste des emplois du Temps</h1>
+    <br />
+    <br />
+    <a asp-area="" asp-controller="EmploiDutemps" asp-action="Create"><b>Create new Emploi Temps</b></a>
+    <<br /><br />
+<table class="table">
+
+     <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Année Scolaire")
+            </th>
+            <th>
+                @Html.DisplayName("Nom Ecole")
+            </th>
+            <th>
+                @Html.DisplayName("Groupe")
+            </th>
+                <th>
+                    @Html.DisplayName("Locale")
+                </th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (EmploiTemps et in Model)
+        {
+            <tr> 
+                    <td>@et.Annee_Scolaire</td>
+                    <td>@et.Nom_Ecole</td>
+                    <td>@et.Groupe</td>
+                    <td>@et.Locale</td>
+                    <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Detail" asp-route-id="@et.ID"><b>detail</b></a></td>
+                    <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Edit" asp-route-id="@et.ID"><b>Modifier</b></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+</body>
+</html>

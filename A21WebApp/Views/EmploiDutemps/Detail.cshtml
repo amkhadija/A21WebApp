@@ -1,0 +1,91 @@
+﻿@model A21WebApp.Models.EmploiTemps
+
+@{
+    ViewData["Title"] = "Emploi du temps";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div>
+    <h4>Emploi du temps</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Annee_Scolaire)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Annee_Scolaire)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nom_Ecole)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nom_Ecole)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Groupe)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Groupe)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Locale)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Locale)
+        </dd>
+    </dl>
+</div>
+<div>
+<table class="table" border="1">
+    <tbody>
+      <tr>
+        <td>Lundi</td>
+        @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x=>x.Jours=="Lundi"))
+        {
+         <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+                  
+        }
+     </tr>
+    <tr>
+                <td>Mardi</td>
+        @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mardi"))
+        {
+            <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+        }
+    </tr>
+    <tr>
+                <td>Mercredi</td>
+        @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mercredi"))
+        {
+            <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+        }
+    </tr>
+            <tr>
+                <td>Jeudi</td>
+                @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Jeudi"))
+                {
+                    <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+                }
+            </tr>
+            </tr>
+            <tr>
+                <td>Vendredi</td>
+                @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Vendredi"))
+                {
+                    <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+                }
+            </tr>
+    </tbody>
+</table>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Retour a la liste</a>
+</div>
