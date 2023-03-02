@@ -16,12 +16,14 @@ namespace A21WebApp.Controllers
         string baseURL = "https://localhost:7109/";
 
         private readonly IEmploiDuTempsService _serviceEmploiduTemps;
+        private readonly IEnseignantService _serviceEnseigant;
 
 
-        public EmploiDutempsController(ILogger<EmploiDutempsController> logger, IEmploiDuTempsService serviceEmploiduTemps)
+        public EmploiDutempsController(ILogger<EmploiDutempsController> logger, IEmploiDuTempsService serviceEmploiduTemps, IEnseignantService serviceEnseigant)
         {
             _logger = logger;
             _serviceEmploiduTemps = serviceEmploiduTemps;
+            _serviceEnseigant = serviceEnseigant;
         }
 
         public async Task<IActionResult> Index()
@@ -33,21 +35,39 @@ namespace A21WebApp.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             ViewData.Model = await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
+            ViewData["Enseignants"]= await _serviceEnseigant.GetEnseignants();
             return View();
         }
 
         public async Task<IActionResult> Edit(int id)
         {
             ViewData.Model = await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
+            ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
             return View();
         }
-        public async Task<IActionResult> Create(int id)
+        public async Task<IActionResult> Create()
         {
-            var t = getEmploiDuTempsFromForm();
             var emp = new EmploiTemps();
-            var empt = await _serviceEmploiduTemps.SaveEmploiduTemps(emp);
-            ViewData.Model = await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
-            return View();
+            var crs= new List<CrenoHoraire>();
+            string[] JoursArray = new string[] { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi" };
+
+            // Add CrenoHoraires to the new EmploiTemps object
+
+            for (int i = 0; i < 25; i++)
+            {
+                var crenoHoraire = new CrenoHoraire
+                {
+                    Jours = JoursArray[i/5],
+                    Periode = (i%5)+1,
+                    ID = i+1
+                };
+                crs.Add(crenoHoraire);
+            }
+                
+            emp.CrenoHoraires = crs;
+            ViewData.Model = emp;
+            ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
+            return View("Edit");
         }
         [HttpPost]
         public async Task<IActionResult> Save(int id)
@@ -56,7 +76,7 @@ namespace A21WebApp.Controllers
             var empt = getEmploiDuTempsFromForm();
             empt = await _serviceEmploiduTemps.SaveEmploiduTemps(empt);
             ViewData.Model = empt;//await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
-            return RedirectToAction("Detail", new RouteValueDictionary { { "id", id } });
+            return RedirectToAction("Detail", new RouteValueDictionary { { "id", empt.ID } });
         }
 
         private EmploiTemps getEmploiDuTempsFromForm()
@@ -64,12 +84,13 @@ namespace A21WebApp.Controllers
             EmploiTemps emp = getEmploiTempsFromFromH();
             var liste = new List<CrenoHoraire>();
 
-            for (int i = 1; i <= 25; i++)
+            var crenoIds = Request.Form.Keys.Where(x => x.StartsWith("ID_")).Select(x => x.Split("_")[1]).ToList();
+            crenoIds.ForEach(id =>
             {
-                var crenoPrperties = Request.Form.Keys.Where(x => x.EndsWith($"_{i}")).ToList();
+                var crenoPrperties = Request.Form.Keys.Where(x => x.EndsWith($"_{id}")).ToList();
                 var ch = getCreno(crenoPrperties);
                 liste.Add(ch);
-            }
+            });
             emp.CrenoHoraires = liste;
             return emp;
         }
@@ -130,7 +151,7 @@ namespace A21WebApp.Controllers
                             creno.ID = int.Parse(value);
                             break;
                         case "EnseignantID":
-                            creno.EnseignantID = int.Parse(value);
+                            creno.EnseignantID = int.Parse(value)>0? int.Parse(value):null;
                             break;
                         case "Jours":
                             creno.Jours = value;
@@ -145,36 +166,7 @@ namespace A21WebApp.Controllers
                 }
             });
             return creno;
-        }
-
-        public async Task<IActionResult> getEnseigants(int id)
-        {
-            //calling the web API and populating the data in view usinsing dataTable
-            DataTable dt = new DataTable();
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(baseURL);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage getData = await client.GetAsync("api/Enseignants");
-                if (getData.IsSuccessStatusCode)
-                {
-                    string results = getData.Content.ReadAsStringAsync().Result;
-                    dt = JsonConvert.DeserializeObject<DataTable>(results);
-                }
-                else
-                {
-                    Console.WriteLine("Erreur calling web API");
-                }
-                ViewData.Model = dt;
-            }
-            return View();
-        }
-        //public async Task<IActionResult> getListEnseigants()
-        //{
-        //    ViewData.Model = await _serviceEmploiduTemps.GetListeEmploiduTemps();
-        //    return View();
-        //}
+        }            
 
     }
 }

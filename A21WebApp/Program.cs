@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IEmploiDuTempsService, EmploiDuTempsService>();
+builder.Services.AddScoped<IEnseignantService, EnseignantService>();
 
 var app = builder.Build();
 

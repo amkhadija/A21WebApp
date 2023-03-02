@@ -41,11 +41,17 @@ namespace A21WebApp.Services
         public async Task<EmploiTemps> SaveEmploiduTemps(EmploiTemps emploiTemps)
         {
             var response = await _httpClient.PostAsJsonAsync<EmploiTemps>("api/EmploiTemps", emploiTemps);
-            //var respContent = await response.Content.ReadAsStringAsync();
+            if(response.StatusCode==System.Net.HttpStatusCode.OK)
+            {
+                //var respContent1 = await response.Content.ReadAsStringAsync();
+                var empt = await response.Content.ReadFromJsonAsync<EmploiTemps>();
+                return empt;
+            }
+            var respContent = await response.Content.ReadAsStringAsync();
             //var requestContent = await response.RequestMessage.Content.ReadAsStringAsync();
             //var empt =  await response.Content.ReadFromJsonAsync<EmploiTemps>();
             //empt.CrenoHoraires = await _httpClient.GetFromJsonAsync<IEnumerable<CrenoHoraire>>($"api/CrenoHoraires/EmploiTemps/{emploiTemps.ID}");
-            return await GetEmploiduTempsAvecCrenoHoraires(emploiTemps.ID);
+            return null;
 
         }
         public async Task<EmploiTemps> CreateEmploiduTemps(EmploiTemps emploiTemps)

@@ -1,5 +1,7 @@
 ﻿@model A21WebApp.Models.CrenoHoraire
-
+@{
+    var ensignants = ViewData["Enseignants"] as IEnumerable<Enseignant>;
+}
 <hr />
 @*<div class="row">*@
     @*<div class="col-md-4">*@
@@ -11,11 +13,32 @@
         <input asp-for="Periode" class="form-control" name="Periode_@Model.ID" />
         <span asp-validation-for="Periode" class="text-danger"></span>
     </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="EnseignantID" class="control-label"></label>
          <input asp-for="EnseignantID" class="form-control" name="EnseignantID_@Model.ID" />
                 <span asp-validation-for="EnseignantID" class="text-danger"></span>
-            </div>
+            </div>*@
+        <div class="form-group">
+                <label asp-for="EnseignantID" class="control-label"></label>
+
+            @*@Html.DropDownListFor(m => m.EnseignantID, new SelectList(ensignants,"Id","Nom"),"Select Enseignant")*@
+   @* @Html.DropDownList("EnseignantID", new SelectList(ensignants,"Id","Nom"),"Select Enseignant",new {@name=$"EnseignantID_{@Model.ID}"})*@
+    <select data-val="true" data-val-required="The DayOfWeek field is required." id="EnseignantID" name="EnseignantID_@Model.ID">
+        <option value="0">choisir enseignant</option>
+        @foreach (Enseignant e in ensignants)
+        {
+            if (e.Id == Model.EnseignantID)
+            {
+                <option selected="selected" value="@e.Id">@e.Nom @e.Prenom</option>
+            }
+            else
+            {
+                <option value="@e.Id">@e.Nom @e.Prenom</option>
+            }
+        }
+        
+    </select>
+                    </div>
             <div class="form-group">
     <input asp-for="Jours" class="form-control" name="Jours_@Model.ID" type="hidden" />
             </div>

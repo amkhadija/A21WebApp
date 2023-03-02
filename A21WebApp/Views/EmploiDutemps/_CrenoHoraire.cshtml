@@ -1,4 +1,7 @@
 ﻿@model A21WebApp.Models.CrenoHoraire
+@{
+    var ensignants = ViewData["Enseignants"] as IEnumerable<Enseignant> ;
+}
 
 <div>
     <dl class="row">
@@ -7,7 +10,9 @@
             @Html.DisplayNameFor(model => model.EnseignantID)
         </dt>
         <dd class = "col-sm-12">
-            @Html.DisplayFor(model => model.EnseignantID)
+            @Html.DropDownListFor(m => m.EnseignantID,
+            new SelectList(ensignants,"Id","Nom"),
+            "Select Enseignant")
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Periode)
