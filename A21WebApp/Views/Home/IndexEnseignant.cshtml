@@ -1,5 +1,4 @@
-﻿
-@using System.Data
+﻿@using System.Data
 @model DataTable
 @{
     ViewData["Title"] = "Fetching Data from WebAPI";
@@ -9,40 +8,44 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - A21WebAPI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-   
+    <title></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="bg"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="black-lives-matter animate-charcter">Les enseignants</p>
+            </div>
+            <br /><br /><br /><br /><br /><br />
+            <table class="table table-striped table-hover">
+            <thead>
+                    <tr>
 
-    <h1 class="text-center">La liste des enseignants</h1>
-<table class="table">
-
-     <thead>
-        <tr>
-            <th>
-                @Html.DisplayName("Nom")
-            </th>
-            <th>
-                @Html.DisplayName("Prenom")
-            </th>
-            <th>
-                @Html.DisplayName("Cours")
-            </th>
-          
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (DataRow row in Model.Rows)
-        {
-            <tr> 
-                <td>@row["Nom"]</td>
-                <td>@row["Prenom"]</td>
-                <td>@row["Cours"]</td>
-            </tr>
-        }
-    </tbody>
-</table>
+                        <th style="color: #997A8D" class="fs-4">
+                            @Html.DisplayName("Nom")
+                        </th>
+                        <th style="color: #997A8D" class="fs-4">
+                            @Html.DisplayName("Prenom")
+                        </th>
+                        <th style="color: #997A8D" class="fs-4">
+                            @Html.DisplayName("Cours")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.Rows)
+                    {
+                        <tr>
+                            <td>@row["Nom"]</td>
+                            <td>@row["Prenom"]</td>
+                            <td>@row["Cours"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 </body>
 </html>

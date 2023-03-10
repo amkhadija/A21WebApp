@@ -1,25 +1,16 @@
 ﻿@model A21WebApp.Models.CrenoHoraire
 @{
     var ensignants = ViewData["Enseignants"] as IEnumerable<Enseignant> ;
+    
+    var ensignant = ensignants.FirstOrDefault(x => x.Id == Model.EnseignantID);
+    var colorClass = ensignant?.Cours != null ? "module-" + ensignant?.Cours : "";
+        
 }
-
 <div>
-    <dl class="row">
+    <div class="row @colorClass">
+        <p><b>@ensignant?.Cours</b></p>
+        <p>@ensignant?.Nom @ensignant?.Prenom</p>
 
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EnseignantID)
-        </dt>
-        <dd class = "col-sm-12">
-            @Html.DropDownListFor(m => m.EnseignantID,
-            new SelectList(ensignants,"Id","Nom"),
-            "Select Enseignant")
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Periode)
-        </dt>
-        <dd class = "col-sm-12">
-            @Html.DisplayFor(model => model.Periode)
-        </dd>
-    </dl>
+    </div>
 </div>
 

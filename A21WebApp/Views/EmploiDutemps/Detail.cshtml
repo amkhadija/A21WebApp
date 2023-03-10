@@ -5,87 +5,99 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+<div class="bg"></div>
 <div>
-    <h4>Emploi du temps</h4>
+    @*<h4>Détails emploi du temps</h4>*@
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="black-lives-matter ">Emplois du Temps</p>
+        </div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
+                <b style="color: #997A8D;"> @Html.DisplayNameFor(model => model.ID)</b>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID)
+                <b style="color: #997A8D;">@Html.DisplayFor(model => model.ID)</b>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Annee_Scolaire)
+                <b style="color: #997A8D;"> @Html.DisplayNameFor(model => model.Annee_Scolaire)</b>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Annee_Scolaire)
+                <b style="color: #997A8D;">@Html.DisplayFor(model => model.Annee_Scolaire)</b>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nom_Ecole)
+                <b style="color: #997A8D;">@Html.DisplayNameFor(model => model.Nom_Ecole)</b>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nom_Ecole)
+                <b style="color: #997A8D;">@Html.DisplayFor(model => model.Nom_Ecole)</b>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Groupe)
+                <b style="color: #997A8D;">@Html.DisplayNameFor(model => model.Groupe)</b>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Groupe)
+                <b style="color: #997A8D;">@Html.DisplayFor(model => model.Groupe)</b>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Locale)
+                <b style="color: #997A8D;"> @Html.DisplayNameFor(model => model.Locale)</b>
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Locale)
+                <b style="color: #997A8D;">@Html.DisplayFor(model => model.Locale)</b>
         </dd>
     </dl>
 </div>
 <div>
-<table class="table" border="1">
+    <table class="table table-bordered" border="1">
+        <tr>
+                <th style="color:#730800;">Jour</th>
+                <th style ="color:#730800;">Periode 1</th>
+                <th style ="color:#730800;">Periode 2</th>
+                <th style ="color:#730800;">Periode 3</th>
+                <th style="color:#730800;">Periode 4</th>
+                <th style="color:#730800;">Periode 5</th>
+
+        </tr>
     <tbody>
       <tr>
-        <td>Lundi</td>
+        <td style="color:#730800;">Lundi</td>
         @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x=>x.Jours=="Lundi"))
         {
-         <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
+            <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
                   
         }
      </tr>
     <tr>
-                <td>Mardi</td>
+        <td style="color:#730800;">Mardi</td>
         @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mardi"))
         {
             <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
         }
     </tr>
     <tr>
-                <td>Mercredi</td>
+        <td style="color:#730800;">Mercredi</td>
         @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Mercredi"))
         {
             <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
         }
     </tr>
-            <tr>
-                <td>Jeudi</td>
+    <tr>
+        <td style="color:#730800;">Jeudi</td>
                 @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Jeudi"))
                 {
                     <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
                 }
-            </tr>
-            </tr>
-            <tr>
-                <td>Vendredi</td>
+    </tr>
+    <tr>
+    <td style="color:#730800;">Vendredi</td>
                 @foreach (CrenoHoraire ch in Model.CrenoHoraires.Where(x => x.Jours == "Vendredi"))
                 {
                     <td>@await Html.PartialAsync("_CrenoHoraire", ch)</td>
                 }
-            </tr>
+    </tr>
     </tbody>
 </table>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Retour a la liste</a>
+    <div class="text-end" style="color: #997A8D">
+   @* @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+        <a asp-action="Index" style="color: #997A8D">Retour a la liste</a>
 </div>

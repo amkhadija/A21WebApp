@@ -1,11 +1,7 @@
 ﻿using A21WebApp.Models;
 using A21WebApp.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Data;
-using System.Diagnostics;
-using System.Net.Http.Headers;
 
 namespace A21WebApp.Controllers
 {
@@ -13,11 +9,10 @@ namespace A21WebApp.Controllers
     {
         private readonly ILogger<EmploiDutempsController> _logger;
 
-        string baseURL = "https://localhost:7109/";
+        private string baseURL = "https://localhost:7109/";
 
         private readonly IEmploiDuTempsService _serviceEmploiduTemps;
         private readonly IEnseignantService _serviceEnseigant;
-
 
         public EmploiDutempsController(ILogger<EmploiDutempsController> logger, IEmploiDuTempsService serviceEmploiduTemps, IEnseignantService serviceEnseigant)
         {
@@ -28,14 +23,14 @@ namespace A21WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewData.Model= await _serviceEmploiduTemps.GetListeEmploiduTemps();
+            ViewData.Model = await _serviceEmploiduTemps.GetListeEmploiduTemps();
             return View();
         }
 
         public async Task<IActionResult> Detail(int id)
         {
             ViewData.Model = await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
-            ViewData["Enseignants"]= await _serviceEnseigant.GetEnseignants();
+            ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
             return View();
         }
 
@@ -45,10 +40,13 @@ namespace A21WebApp.Controllers
             ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
             return View();
         }
+
+        //Methode pour afficher le formulaire de creation EmploiTemps
+        //return view  Edit (modifier) car la create and update utilise le meme formulaire
         public async Task<IActionResult> Create()
         {
             var emp = new EmploiTemps();
-            var crs= new List<CrenoHoraire>();
+            var crs = new List<CrenoHoraire>();
             string[] JoursArray = new string[] { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi" };
 
             // Add CrenoHoraires to the new EmploiTemps object
@@ -57,28 +55,42 @@ namespace A21WebApp.Controllers
             {
                 var crenoHoraire = new CrenoHoraire
                 {
-                    Jours = JoursArray[i/5],
-                    Periode = (i%5)+1,
-                    ID = i+1
+                    Jours = JoursArray[i / 5],
+                    Periode = (i % 5) + 1,
+                    ID = i + 1
                 };
                 crs.Add(crenoHoraire);
             }
-                
+
             emp.CrenoHoraires = crs;
             ViewData.Model = emp;
             ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
             return View("Edit");
         }
+
+        //Methode save permet l'enregistrement d'un new EploiTemps ou d'un update
         [HttpPost]
         public async Task<IActionResult> Save(int id)
         {
             //if (!ModelState.IsValid)
             var empt = getEmploiDuTempsFromForm();
-            empt = await _serviceEmploiduTemps.SaveEmploiduTemps(empt);
-            ViewData.Model = empt;//await _serviceEmploiduTemps.GetEmploiduTempsAvecCrenoHoraires(id);
-            return RedirectToAction("Detail", new RouteValueDictionary { { "id", empt.ID } });
+            var emptResult = await _serviceEmploiduTemps.SaveEmploiduTemps(empt);
+            if (emptResult != null)
+            {
+                ViewData["Errors"] = "";
+                ViewData.Model = emptResult;
+                return RedirectToAction("Detail", new RouteValueDictionary { { "id", empt.ID } });
+            }
+            else
+            {
+                ViewData.Model = empt;
+                ViewData["Enseignants"] = await _serviceEnseigant.GetEnseignants();
+                ViewData["Errors"] = _serviceEmploiduTemps.getErrors();
+                return View("Edit");
+            }
         }
 
+        //Methode pour créer un objet EmploiTemps à partir de formulaire de update/Create
         private EmploiTemps getEmploiDuTempsFromForm()
         {
             EmploiTemps emp = getEmploiTempsFromFromH();
@@ -95,6 +107,7 @@ namespace A21WebApp.Controllers
             return emp;
         }
 
+        // return emploiTemps sans les crenoHoraires (Header)
         private EmploiTemps getEmploiTempsFromFromH()
         {
             var emp = new EmploiTemps();
@@ -143,22 +156,26 @@ namespace A21WebApp.Controllers
             {
                 var pName = p.Split("_")[0];
                 var value = Request.Form[p].First();
-                if ( !string.IsNullOrWhiteSpace(value))
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     switch (pName)
                     {
                         case "ID":
                             creno.ID = int.Parse(value);
                             break;
+
                         case "EnseignantID":
-                            creno.EnseignantID = int.Parse(value)>0? int.Parse(value):null;
+                            creno.EnseignantID = int.Parse(value) > 0 ? int.Parse(value) : null;
                             break;
+
                         case "Jours":
                             creno.Jours = value;
                             break;
+
                         case "EmploiTempsID":
                             creno.EmploiTempsID = int.Parse(value);
                             break;
+
                         case "Periode":
                             creno.Periode = int.Parse(value);
                             break;
@@ -166,7 +183,12 @@ namespace A21WebApp.Controllers
                 }
             });
             return creno;
-        }            
+        }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _serviceEmploiduTemps.DeleteEmploiduTemps(id);
+            return RedirectToAction("Index");
+        }
     }
 }

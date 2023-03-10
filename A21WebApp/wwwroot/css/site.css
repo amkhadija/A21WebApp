@@ -1,22 +1,156 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+/*Create ruby Khadija*/
+.module-Anglais {
+    background-color: aquamarine;
+}
+
+.module-Art {
+    background-color: antiquewhite;
+}
+
+.module-Titulaire {
+    background-color: chartreuse;
+}
+
+.module-Sport {
+    background-color: coral;
+}
+/*Fin create ruby Khadija*/
+@keyframes tipsy {
+    0 {
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(-50%) translateY(-50%) rotate(360deg);
+    }
+}
+
+body {
+    font-family: helvetica, arial, sans-serif;
+    background-color: #2e2e31;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #fffbf1;
+    text-shadow: 0 20px 25px #2e2e31, 0 40px 60px #2e2e31;
+    font-size: 80px;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: -3px;
+    margin: 0;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+    h1:before,
+    h1:after {
+        content: '';
+        padding: .9em .4em;
+        position: absolute;
+        left: 50%;
+        width: 150%;
+        top: 50%;
+        display: block;
+        border: 15px solid red;
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+        animation: 10s infinite alternate ease-in-out tipsy;
+    }
+
+    h1:before {
+        border-color: #ebf8e1;
+        z-index: -1;
+    }
+
+    h1:after {
+        border-color: #730800;
+        box-shadow: 25px 25px 25px rgba(46, 46, 49, .8);
+    }
+
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(0.25turn, #FDE9E0, #FEFEFE, #FEE7F0);
+    animation: animateBg 20s ease infinite;
+}
+
+@keyframes animateBg {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+h1 {
+    text-align: center;
+    font-size: 4rem;
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #997A8D;
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Red+Hat+Display:900&display=swap');
+
+.black-lives-matter {
+    font-size: 8vw;
+    line-height: 8vw;
+    margin: 0;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: 900;
+    background: url(https://raw.githubusercontent.com/s1mpson/-/master/codepen/black-lives-matter/victim-collage.png);
+    background-size: 40%;
+    background-position: 50% 50%;
+    -webkit-background-clip: text;
+    color: rgba(0,0,0,0.08);
+    animation: zoomout 10s ease 500ms forwards;
+}
+
+@keyframes zoomout {
+    from {
+        background-size: 40%;
+    }
+
+    to {
+        background-size: 10%;
+    }
 }

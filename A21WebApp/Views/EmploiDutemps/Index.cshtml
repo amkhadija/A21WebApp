@@ -6,7 +6,6 @@
 @{
     ViewData["Title"] = "Liste des emplois du temps";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +16,60 @@
    
 </head>
 <body>
+    <div class="bg"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="black-lives-matter ">Emplois du Temps</p>
+            </div>
+            <br /><br /><br /><br /><br />
+            <div class="row">
+                <div class="col-md-12 text-end">
+                    <a asp-area="" asp-controller="EmploiDutemps" asp-action="Create"><b style="color: #997A8D;" class="fs-4">Créer un nouveau Emploi du Temps </b></a>
+                </div>
 
-    <h1 class="text-center">Liste des emplois du Temps</h1>
+                <br /><br /> <table class="table table-striped table-hover">
+
+                    <thead>
+                        <tr>
+                            <th style="color: #997A8D" class="fs-4">
+                                @Html.DisplayName("Année Scolaire")
+                            </th>
+                            <th style="color: #997A8D" class="fs-4">
+                                @Html.DisplayName("Nom Ecole")
+                            </th>
+                            <th style="color: #997A8D" class="fs-4">
+                                @Html.DisplayName("Groupe")
+                            </th>
+                            <th style="color: #997A8D" class="fs-4">
+                                @Html.DisplayName("Locale")
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (EmploiTemps et in Model)
+                        {
+                            <tr>
+                                <td>@et.Annee_Scolaire</td>
+                                <td>@et.Nom_Ecole</td>
+                                <td>@et.Groupe</td>
+                                <td>@et.Locale</td>
+                                <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Detail" asp-route-id="@et.ID"><b style="color: #997A8D;">Détail</b></a></td>
+                                <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Edit" asp-route-id="@et.ID"><b style="color: #997A8D;">Modifier</b></a></td>
+                                <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Delete" asp-route-id="@et.ID"><b style="color: #997A8D;">Supprimer</b></a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+@*    <h1 class="text-center">Liste des emplois du Temps</h1>
     <br />
     <br />
-    <a asp-area="" asp-controller="EmploiDutemps" asp-action="Create"><b>Create new Emploi Temps</b></a>
-    <<br /><br />
-<table class="table">
+    <a asp-area="" asp-controller="EmploiDutemps" asp-action="Create"><b>Créer un nouveau emploi Temps</b></a>
+    <br/><br/>
+    <table class="table table-bordered">
 
      <thead>
         <tr>
@@ -36,8 +82,11 @@
             <th>
                 @Html.DisplayName("Groupe")
             </th>
-                <th>
-                    @Html.DisplayName("Locale")
+            <th>
+                @Html.DisplayName("Locale")
+            </th>
+                <th colspan="2" >
+                    Actions
                 </th>
           
         </tr>
@@ -50,11 +99,11 @@
                     <td>@et.Nom_Ecole</td>
                     <td>@et.Groupe</td>
                     <td>@et.Locale</td>
-                    <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Detail" asp-route-id="@et.ID"><b>detail</b></a></td>
+                    <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Detail" asp-route-id="@et.ID"><b>Détails</b></a></td>
                     <td><a asp-area="" asp-controller="EmploiDutemps" asp-action="Edit" asp-route-id="@et.ID"><b>Modifier</b></a></td>
             </tr>
         }
     </tbody>
-</table>
+</table>*@
 </body>
 </html>

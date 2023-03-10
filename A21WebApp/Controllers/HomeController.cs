@@ -12,10 +12,9 @@ namespace A21WebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        string baseURL = "https://localhost:7109/";
+        private string baseURL = "https://localhost:7109/";
 
         private readonly IEmploiDuTempsService _serviceEmploiduTemps;
-
 
         public HomeController(ILogger<HomeController> logger, IEmploiDuTempsService serviceEmploiduTemps)
         {
@@ -25,10 +24,9 @@ namespace A21WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewData.Model= await _serviceEmploiduTemps.GetListeEmploiduTemps();
+            ViewData.Model = await _serviceEmploiduTemps.GetListeEmploiduTemps();
             return View();
         }
-      
 
         public async Task<IActionResult> IndexEnseignant()
         {
